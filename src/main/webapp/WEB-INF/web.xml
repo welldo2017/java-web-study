@@ -1,0 +1,8 @@
+<!DOCTYPE web-app PUBLIC
+        "-//Sun Microsystems, Inc.//DTD Web Application 2.3//EN"
+        "http://java.sun.com/dtd/web-app_2_3.dtd">
+<web-app>
+    <display-name>Archetype Created Web Application</display-name>
+</web-app>
+
+<!--实际上只需要保证servlet jar的版本，web.xml没那么严格，到后面有了springboot这个web.xml都不需要了-->
