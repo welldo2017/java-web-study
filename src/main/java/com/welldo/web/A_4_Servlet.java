@@ -9,11 +9,12 @@ import java.io.PrintWriter;
 /**
  * Servlet入门
  *
- * 0. 在上一节中，我们看到，编写HTTP服务器其实是非常简单的，只需要先编写基于多线程的TCP服务，然后在一个TCP连接中读取HTTP请求，发送HTTP响应即可。
+ * 0. 在上一节中，我们看到，编写HTTP服务器其实是非常简单的，只需要先编写多线程的socket(TCP服务)，然后在一个TCP连接中读取HTTP请求，发送HTTP响应即可。
  * 但是，要编写一个完善的HTTP服务器，则需要考虑很多。
  * 这些基础工作需要耗费大量的时间，如果我们只需要输出一个简单的HTML页面，就不得不编写上千行底层代码，那就根本无法做到高效而可靠地开发。
  *
- * 0.1 因此，在JavaEE平台上，处理TCP连接，解析HTTP协议这些底层工作统统扔给现成的Web服务器去做，我们只需要把自己的应用程序跑在Web服务器上
+ * 0.1 因此，在JavaEE平台上，处理TCP连接，解析HTTP协议这些底层工作统统扔给现成的Web服务器去做，
+ * 我们只需要编写自己的应用程序, 并让它跑在Web服务器上即可.
  * 为了实现这一目的，JavaEE提供了Servlet API，我们使用Servlet API编写自己的Servlet来处理HTTP请求，
  * Web服务器实现Servlet API接口，实现底层功能：
  *
@@ -22,8 +23,9 @@ import java.io.PrintWriter;
  *                  ├───────────┤
  *                  │Servlet API│
  * ┌───────┐  HTTP  ├───────────┤
- * │Browser│<──────>│Web Server │
+ * │Browser│<──────>│Web Server │处理TCP连接，解析HTTP协议这些底层工作
  * └───────┘        └───────────┘
+ * 看代码.
  *
  *
  * 3.如何启动？？？
@@ -65,12 +67,12 @@ import java.io.PrintWriter;
  */
 
 
+//1. 一个Servlet总是继承自 HttpServlet，然后覆写doGet()或doPost()方法。
 // WebServlet注解表示这是一个Servlet，并映射到地址/:
 // @WebServlet(urlPatterns = "/")
-public class Servlet4 extends HttpServlet {
+public class A_4_Servlet extends HttpServlet {
 
     /**
-     * 1. 一个Servlet总是继承自HttpServlet，然后覆写doGet()或doPost()方法。
      * doGet()方法传入了 HttpServletRequest 和 HttpServletResponse 两个对象，分别代表HTTP请求和响应。
      * 我们使用Servlet API时，并不直接与底层TCP交互，也不需要解析HTTP协议，
      * 因为HttpServletRequest和HttpServletResponse就已经封装好了请求和响应。
@@ -78,6 +80,9 @@ public class Servlet4 extends HttpServlet {
      *
      * 1.1 Servlet API是谁提供？
      * Servlet API是一个jar包，我们需要通过Maven来引入它，才能正常编译。详情见pom.xml文件
+     *  <groupId>javax.servlet</groupId>
+     *  <artifactId>javax.servlet-api</artifactId>
+     *  <version>4.0.0</version>
      *
      * 2. 我们还需要在 src/main/webapp/WEB-INF 目录下创建一个web.xml描述文件，
      */

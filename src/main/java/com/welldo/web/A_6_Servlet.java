@@ -14,7 +14,7 @@ import java.io.PrintWriter;
  * author:welldo
  * date: 2021-09-12 16:17
  */
-@WebServlet(urlPatterns = "/")
-public class Servlet6 extends HttpServlet {
+// @WebServlet(urlPatterns = "/")
+public class A_6_Servlet extends HttpServlet {
 }
 

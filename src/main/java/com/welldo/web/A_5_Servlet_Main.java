@@ -7,13 +7,7 @@ import org.apache.catalina.startup.Tomcat;
 import org.apache.catalina.webresources.DirResourceSet;
 import org.apache.catalina.webresources.StandardRoot;
 
-import javax.servlet.annotation.WebServlet;
-import javax.servlet.http.HttpServlet;
-import javax.servlet.http.HttpServletRequest;
-import javax.servlet.http.HttpServletResponse;
 import java.io.File;
-import java.io.IOException;
-import java.io.PrintWriter;
 
 
 
@@ -29,9 +23,10 @@ import java.io.PrintWriter;
  * 右侧Configuration：Use classpath of module
  * 钩上☑︎Include dependencies with "Provided" scope
  */
- public class ServletMain5 {
+ public class A_5_Servlet_Main {
 
     // 启动Tomcat:
+    //访问时,和 上一节访问 http://localhost:8080/hello/ 不一样, 这里直接访问 http://localhost:8080/ 即可.
     public static void main(String[] args) throws LifecycleException {
         Tomcat tomcat = new Tomcat();
         tomcat.setPort(Integer.getInteger("port", 8080));

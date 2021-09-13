@@ -23,7 +23,7 @@
     </properties>
 
     <dependencies>
-        <!--不再需要servlet，因为引入Tomcat依赖后自动引入了Servlet API-->
+        <!--如果引用了tomcat,就不再需要servlet，因为Tomcat 引入了Servlet API 依赖 -->
         <dependency>
             <groupId>javax.servlet</groupId>
             <artifactId>javax.servlet-api</artifactId>
@@ -34,7 +34,8 @@
 
         <!--引入tomcat所有jar包-->
         <!--注意：引入的Tomcat的scope为provided，
-        在Idea下运行时，需要设置Run/Debug Configurations，选择Application - Main，钩上Include dependencies with "Provided" scope，
+        在Idea下运行某个main()方法时，
+        需要设置Run/Debug Configurations，选择Application - Main，钩上Include dependencies with "Provided" scope，
         这样才能让Idea在运行时把Tomcat相关依赖包自动添加到classpath中。-->
         <dependency>
             <groupId>org.apache.tomcat.embed</groupId>

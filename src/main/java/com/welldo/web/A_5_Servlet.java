@@ -1,17 +1,9 @@
 package com.welldo.web;
 
-import org.apache.catalina.Context;
-import org.apache.catalina.LifecycleException;
-import org.apache.catalina.WebResourceRoot;
-import org.apache.catalina.startup.Tomcat;
-import org.apache.catalina.webresources.DirResourceSet;
-import org.apache.catalina.webresources.StandardRoot;
-
 import javax.servlet.annotation.WebServlet;
 import javax.servlet.http.HttpServlet;
 import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpServletResponse;
-import java.io.File;
 import java.io.IOException;
 import java.io.PrintWriter;
 
@@ -35,11 +27,13 @@ import java.io.PrintWriter;
  * 修改pom文件。
  * 编写Servlet
  *
- * 3. 增加main（）方法 {@link ServletMain5}
+ * 3. 增加main（）方法 {@link A_5_Servlet_Main}
  * 通过main()方法启动Tomcat服务器并加载我们自己的webapp有如下好处：
  *      启动简单，无需下载Tomcat或安装任何IDE插件；
  *      调试方便，可在IDE中使用断点调试；
  *      使用Maven创建war包后，也可以正常部署到独立的Tomcat服务器中。 todo 测试了，暂时不行。。。
+ *
+ * SpringBoot也支持在main()方法中一行代码直接启动Tomcat，并且还能方便地更换成Jetty等其他服务器。它的启动方式和这里是基本一样的
  *
  * 4. mian（）方法有干扰吗？没有。因为：
  * 容器直接读web.xml找servlet，容器不会管哪个class里有main方法
@@ -49,7 +43,7 @@ import java.io.PrintWriter;
  * date: 2021-09-12 16:17
  */
 @WebServlet(urlPatterns = "/")
-public class Servlet5 extends HttpServlet {
+public class A_5_Servlet extends HttpServlet {
     //将上一节的代码复制过来。
     protected void doGet(HttpServletRequest req, HttpServletResponse resp) throws IOException {
         //获取请求参数

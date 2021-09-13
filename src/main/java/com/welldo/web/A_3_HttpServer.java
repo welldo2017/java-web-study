@@ -6,22 +6,36 @@ import java.net.Socket;
 import java.nio.charset.StandardCharsets;
 
 /**
- * web开发
+ * socket编程.
  * （注：代码不用仔细研究）
  *
- * 0. HTTP编程是以客户端的身份去请求服务器资源。
- * （详情见java-base-study todo 需要重新学习）
+ * 0. HTTP编程是以客户端的身份去请求服务器资源。 * （详情见java-base-study工程17章. todo 需要重新学习）
  * 现在，我们需要以服务器的身份响应客户端请求，编写服务器程序来处理客户端请求通常就称之为Web开发。
  *
  *
  * 1.如何编写HTTP Server。
- * 一个 HTTP Server本质上是一个TCP服务器，我们先用TCP编程的多线程实现的服务器端框架：
+ * 一个 HTTP Server本质上是一个TCP服务器，我们先用多线程实现 "TCP编程的 的服务器"：(见代码)
+ *
+ * 在开发网络应用程序的时候，我们又会遇到Socket这个概念。
+ * Socket是一个抽象概念，一个应用程序通过一个Socket来建立一个远程连接，而Socket内部通过TCP/IP协议把数据传输到网络：
+ * (也就是说,socket封装了 tcp)
+ *
+ * ┌───────────┐                                   ┌───────────┐
+ * │Application│                                   │Application│
+ * ├───────────┤                                   ├───────────┤
+ * │  Socket   │                                   │  Socket   │
+ * ├───────────┤                                   ├───────────┤
+ * │    TCP    │                                   │    TCP    │
+ * ├───────────┤      ┌──────┐       ┌──────┐      ├───────────┤
+ * │    IP     │<────>│Router│<─────>│Router│<────>│    IP     │
+ * └───────────┘      └──────┘       └──────┘      └───────────┘
+ * Socket、TCP和部分IP的功能都是由操作系统提供的，Java提供的几个Socket相关的类就封装了操作系统提供的接口。
  *
  *
  * 2.各个版本的区别（不用仔细研究）
  * HTTP目前有多个版本，
  * 1.0 版本浏览器每次建立TCP连接后，只发送一个HTTP请求并接收一个HTTP响应，然后就关闭TCP连接。
- * 由于创建TCP连接本身就需要消耗一定的时间，
+ * 由于创建TCP连接本身就需要消耗一定的时间，所以1.0 版本很慢.
  * 因此，HTTP 1.1允许浏览器和服务器在同一个TCP连接上反复发送、接收多个HTTP请求和响应，这样就大大提高了传输效率。
  *
  * 我们注意到HTTP协议是一个请求-响应协议，它总是发送一个请求，然后接收一个响应。
@@ -30,21 +44,12 @@ import java.nio.charset.StandardCharsets;
  * （我的理解是 1.1 每次只能发一个请求，2.0每次可以发多个请求，和同步异步没有关系。todo 需要确认）
  * （可以参考 https://www.cnblogs.com/heluan/p/8620312.html ）
  *
- *
- *
- *
- * 4.HTTP协议运行在TCP之上，所有传输的内容都是明文，
- * HTTPS运行在SSL/TLS之上，SSL/TLS运行在TCP之上，所有传输的内容都经过加密的。
- * 前者是80，后者是443。
- * http ===> tcp
- * https ===> SSL/TLS(加密解密) ===> tcp
- *
- *
+ * HTTP 3.0为了进一步提高速度，将抛弃TCP协议，改为使用无需创建连接的UDP协议，目前HTTP 3.0仍然处于实验阶段。
  *
  * author:welldo
  * date: 2021-09-12 16:17
  */
-public class Base_3 {
+public class A_3_HttpServer {
     //启动后，请求 http://local.liaoxuefeng.com:8080/ 即可
     //local.liaoxuefeng.com 被廖雪峰老师买了，并且指向了 127.0.0.1
     public static void main(String[] args) throws IOException {
@@ -79,6 +84,15 @@ class Handler extends Thread {
         }
     }
 
+    /**
+     * 只需要在handle()方法中，用Reader读取HTTP请求，用Writer发送HTTP响应，即可实现一个最简单的HTTP服务器
+     * 这里的核心代码是，先读取HTTP请求，这里我们只处理GET /的请求。
+     * 当读取到空行时，表示已读到连续两个\r\n，说明请求结束，可以发送响应。
+     * 发送响应的时候，首先发送响应代码HTTP/1.0 200 OK
+     * 然后，依次发送Header，
+     * 发送完Header后，再发送一个空行标识Header结束，
+     * 紧接着发送HTTP Body，在浏览器输入http://local.liaoxuefeng.com:8080/就可以看到响应页面：
+     */
     private void handle(InputStream input, OutputStream output) throws IOException {
 
         System.out.println("Process new http request...");
