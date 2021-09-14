@@ -1,6 +1,6 @@
 # Java-Web-Study
 
-## web开发，随便学学，本人不是专业后端  
+## 随便学学web开发，写了一些简单demo, 请勿参考  
 
 * web开发  
 >web基础  
