@@ -1,10 +1,12 @@
 package com.welldo.web;
 
 /**
- * 1. 我们前面介绍的所有基于标准JDK的开发都是JavaSE，即Java Platform Standard Edition。
- * 2. 什么是JavaEE？JavaEE是Java Platform Enterprise Edition的缩写，即Java企业平台。
- *  它实际上是完全基于JavaSE，
- *  只是多了一大堆服务器相关的库以及API接口。
+ * 0.
+ *  教程地址： https://www.liaoxuefeng.com/
+ *
+ * 1. JavaSE: 所有基于标准JDK的开发都是 JavaSE，即Standard Edition。(标准版)
+ * 2. JavaEE: JavaEE是 Enterprise Edition的缩写，即Java企业平台。
+ *  它完全基于JavaSE，只是多了一大堆服务器相关的库以及API接口。
  *  所有的JavaEE程序，仍然是运行在标准的JavaSE的虚拟机上的。
  *
  * 3.JavaEE并不是一个软件产品，它更多的是一种软件架构和设计思想。

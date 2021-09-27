@@ -7,9 +7,10 @@ import java.nio.charset.StandardCharsets;
 
 /**
  * socket编程.
- * （注：代码不用仔细研究）
+ * （注：代码不用仔细研究！！！）
  *
- * 0. HTTP编程是以客户端的身份去请求服务器资源。 * （详情见java-base-study工程17章. todo 需要重新学习）
+ * 0. "HTTP编程"是以客户端的身份去请求服务器资源。
+ * （详情见java-base-study工程17章，todo 需要重新学习）https://github.com/welldo2017/java-base-study
  * 现在，我们需要以服务器的身份响应客户端请求，编写服务器程序来处理客户端请求通常就称之为Web开发。
  *
  *
