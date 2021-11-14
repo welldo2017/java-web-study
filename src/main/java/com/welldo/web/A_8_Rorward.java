@@ -12,7 +12,7 @@ import java.io.PrintWriter;
  * 4. Forward
  * Forward是指内部转发。当一个Servlet处理请求的时候，它可以决定自己不继续处理，而是转发给另一个Servlet处理。
  *
- * 我们已经编写了一个能处理/hello的 Servlet，继续编写一个能处理/morning的 Servlet：
+ * 我们已经编写了一个能处理/hello的 Servlet，继续编写一个能处理/sayhi 的 Servlet：
  * 在收到请求后，它并不自己发送响应，而是把请求和响应都转发给路径为/hello的Servlet，即下面的代码：
  *
  * 后续请求的处理实际上是由HelloServlet完成的。这种处理方式称为转发（Forward），我们用流程图画出来如下：
@@ -36,14 +36,14 @@ import java.io.PrintWriter;
  * date: 2021-09-12 16:17
  */
 
-@WebServlet(urlPatterns = "/spring")
+@WebServlet(urlPatterns = "/8sayhi")
 public class A_8_Rorward extends HttpServlet {
 
     @Override
     protected void doGet(HttpServletRequest req, HttpServletResponse resp) throws ServletException, IOException {
 
         // 在收到请求后，它并不自己发送响应，而是把请求和响应都转发给路径为/hello的Servlet，即下面的代码：
-        req.getRequestDispatcher("/hello").forward(req, resp);
+        req.getRequestDispatcher("/7hello").forward(req, resp);
     }
 }
 

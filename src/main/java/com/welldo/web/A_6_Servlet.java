@@ -12,6 +12,11 @@ import java.util.concurrent.ConcurrentHashMap;
 
 /**
  * Servlet进阶
+ *
+ * 0.要处理GET请求，我们要覆写doGet()方法；
+ * 要处理POST请求，就需要覆写doPost()方法。
+ * 如果没有覆写，请求时，就会直接击穿，从而访问父类HttpServlet的doPost()方法：它会直接返回405或400错误，
+ *
  * 1. 一个Web App就是由 N个Servlet组成的，分别映射不同的路径。每个Servlet通过注解说明自己能处理的请求。
  *
  * 1.1 浏览器发出的HTTP请求总是由Web Server先接收，然后，根据映射，不同的请求转发到不同的Servlet：
@@ -29,6 +34,21 @@ import java.util.concurrent.ConcurrentHashMap;
  *                │                      └───────────────┘│
  *                               Web Server
  *                └ ─ ─ ─ ─ ─ ─ ─ ─ ─ ─ ─ ─ ─ ─ ─ ─ ─ ─ ─ ┘
+ * 伪代码
+ * String path = ...
+ * if (path.equals("/hello")) {
+ *     dispatchTo(helloServlet);
+ * } else if (path.equals("/signin")) {
+ *     dispatchTo(signinServlet);
+ * } else {
+ *     // 所有未匹配的路径均转发到"/"
+ *     dispatchTo(indexServlet);
+ * }
+ *
+ * 见代码
+ * 这3个类,分别处理 /a, /b ,/ 三个请求
+ * {@link A_6_Servlet_1}
+ * {@link A_6_Servlet_2}
  *
  * 2. HttpServletRequest
  * HttpServletRequest 封装了一个HTTP请求，它 继承了ServletRequest。
@@ -44,28 +64,24 @@ import java.util.concurrent.ConcurrentHashMap;
  * HttpServletResponse封装了一个HTTP响应。
  * (看代码)
  *
- * 4. 有了HttpServletRequest和HttpServletResponse这两个高级接口，我们就不需要直接处理HTTP协议。
- *
- * 5. 这3个类,分别处理 /a, /b ,/ 三个请求
- * {@link A_6_Servlet_1}
- * {@link A_6_Servlet_2}
- * 一个Servlet类在服务器中只有一个实例，但对于每个HTTP请求，Web服务器会使用多线程执行请求
- * 因此，一个Servlet的doGet()、doPost()等方法,是多线程执行的。如果Servlet中定义了字段，要注意多线程并发访问的问题：
- *
+ * 4. 有了HttpServletRequest和HttpServletResponse这两个高级接口，我们就不需要通过socket直接处理HTTP协议，tcp协议。
  *
  * author:welldo
  * date: 2021-09-12 16:17
  */
 
-//每个Servlet通过注解说明自己能处理的请求。(早期的Servlet需要在web.xml中配置映射路径，现在只需要通过注解就可以完成映射。)
-@WebServlet(urlPatterns = "/a")
+
+@WebServlet(urlPatterns = "/6a")
 public class A_6_Servlet extends HttpServlet {
 
-    //如果Servlet中定义了字段，要注意多线程并发访问的问题：
+    // 一个Servlet类在服务器中只有一个实例，但对于每个HTTP请求，Web服务器会使用多线程执行请求
+    // 因此，一个Servlet的doGet()、doPost()等方法,是多线程执行的。
+    //所以，如果Servlet中定义了字段，要注意多线程并发访问的问题：，这里的map字段，就是多线程并发的:
     private Map<String, String> map = new ConcurrentHashMap<>();
 
     @Override
     protected void doGet(HttpServletRequest req, HttpServletResponse resp) throws ServletException, IOException {
+        //HttpServletRequest和HttpServletResponse实例只有在当前处理线程中有效，它们是局部变量，不存在多线程共享的问题。
 
         /*
         3.1
@@ -84,14 +100,11 @@ public class A_6_Servlet extends HttpServlet {
 
         /**
          *  3.2
+         * 写入响应前，无需设置setContentLength()，因为底层服务器很聪明
          * 写入响应时，需要通过getOutputStream()获取写入流，或者通过getWriter()获取字符流，二者只能获取其中一个。
-         *
-         * 写入响应前，无需设置setContentLength()，因为底层服务器会根据写入的字节数自动设置，
-         *      如果写入的数据量很小，实际上会先写入缓冲区，
-         *      如果写入的数据量很大，服务器会自动采用Chunked编码让浏览器能识别数据结束符而不需要设置Content-Length头。
          */
         PrintWriter pw = resp.getWriter();
-        pw.write("<h1>Hello, web-world!   a页面 </h1>");
+        pw.write("<h1>Hello, web-world!   6a页面 </h1>");
 
         /*
          * 写入完毕后调用flush()却是必须的，因为大部分Web服务器都基于HTTP/1.1协议，会复用TCP连接。

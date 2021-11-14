@@ -26,7 +26,8 @@ public class A_6_Servlet_2 extends HttpServlet {
         resp.setCharacterEncoding("UTF-8");
         // 获取输出流:
         PrintWriter pw = resp.getWriter();
-        pw.write("<h1>Hello, web-world!  \n 默认页面 </h1>");
+        pw.write("<h1>Hello, web-world!  \n 拦截所有请求 </h1>");
+        pw.write("<h1>from-62 </h1>");
         // 最后不要忘记flush强制输出:
         pw.flush();
     }

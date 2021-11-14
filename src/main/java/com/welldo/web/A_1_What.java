@@ -24,7 +24,7 @@ package com.welldo.web;
  * │   JavaSE    │
  * └─────────────┘
  * 此外，JavaEE还有一系列技术标准：
- * EJB：Enterprise JavaBean，企业级JavaBean，早期经常用于实现应用程序的业务逻辑，现在基本被轻量级框架如Spring所取代；
+ * EJB：Enterprise JavaBean，企业级JavaBean，现在基本被轻量级框架如Spring所取代；
  * JAAS：...
  * JCA：...
  * JMS：Java Message Service，用于消息服务；

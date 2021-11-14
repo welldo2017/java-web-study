@@ -10,11 +10,11 @@ import java.nio.charset.StandardCharsets;
  * （注：代码不用仔细研究！！！）
  *
  * 0. "HTTP编程"是以客户端的身份去请求服务器资源。
- * （详情见java-base-study工程17章，todo 需要重新学习）https://github.com/welldo2017/java-base-study
+ * （详情见java-base-study工程17章，todo 需要重新学习,地址 https://github.com/welldo2017/java-base-study)
  * 现在，我们需要以服务器的身份响应客户端请求，编写服务器程序来处理客户端请求通常就称之为Web开发。
  *
  *
- * 1.如何编写HTTP Server。
+ * 1.编写HTTP Server(见代码)
  * 一个 HTTP Server本质上是一个TCP服务器，我们先用多线程实现 "TCP编程的 的服务器"：(见代码)
  *
  * 在开发网络应用程序的时候，我们又会遇到Socket这个概念。
@@ -35,26 +35,33 @@ import java.nio.charset.StandardCharsets;
  *
  * 2.各个版本的区别（不用仔细研究）
  * HTTP目前有多个版本，
- * 1.0 版本浏览器每次建立TCP连接后，只发送一个HTTP请求并接收一个HTTP响应，然后就关闭TCP连接。
- * 由于创建TCP连接本身就需要消耗一定的时间，所以1.0 版本很慢.
- * 因此，HTTP 1.1允许浏览器和服务器在同一个TCP连接上反复发送、接收多个HTTP请求和响应，这样就大大提高了传输效率。
+ * 1.0(已经淘汰) :
+ * 版本浏览器每次建立TCP连接后，只发送一个HTTP请求并接收一个HTTP响应，然后就关闭TCP连接。
+ * 由于创建TCP连接本身就需要消耗一定的时间，所以1.0 版本很慢,
  *
+ * 1.1(主流版本):
+ * 因为1.0的缺点,因此，HTTP 1.1允许浏览器和服务器在同一个TCP连接上反复发送、接收多个HTTP请求和响应，
+ * 这样就大大提高了传输效率。
+ * 大部分Web服务器都基于HTTP/1.1协议
+ *
+ * 2.0():
  * 我们注意到HTTP协议是一个请求-响应协议，它总是发送一个请求，然后接收一个响应。
  * 能不能一次性发送多个请求，然后再接收多个响应呢？
  * HTTP 2.0可以支持浏览器同时发出多个请求，但每个请求需要唯一标识，服务器可以不按请求的顺序返回多个响应，由浏览器自己把收到的响应和请求对应起来。
  * （我的理解是 1.1 每次只能发一个请求，2.0每次可以发多个请求，和同步异步没有关系。todo 需要确认）
  * （可以参考 https://www.cnblogs.com/heluan/p/8620312.html ）
  *
+ * 3.0(实验阶段):
  * HTTP 3.0为了进一步提高速度，将抛弃TCP协议，改为使用无需创建连接的UDP协议，目前HTTP 3.0仍然处于实验阶段。
  *
  * author:welldo
  * date: 2021-09-12 16:17
  */
 public class A_3_HttpServer {
-    //启动后，请求 http://local.liaoxuefeng.com:8080/ 即可
+    //启动后，使用浏览器发送一次请求, http://local.liaoxuefeng.com:8080/
     //local.liaoxuefeng.com 被廖雪峰老师买了，并且指向了 127.0.0.1
     public static void main(String[] args) throws IOException {
-        ServerSocket ss = new ServerSocket(8080); // 监听指定端口
+        ServerSocket ss = new ServerSocket(8080); // 监听我们编写的HTTP Server的8080端口.
         System.out.println("server is running...");
         for (; ; ) {
             Socket sock = ss.accept();
@@ -103,11 +110,13 @@ class Handler extends Thread {
         boolean requestOk = false;
         String first = reader.readLine();
         if (first.startsWith("GET / HTTP/1.")) {
+            System.out.println(first);      //GET / HTTP/1.1
             requestOk = true;
         }
         for (; ; ) {
             String header = reader.readLine();
             if (header.isEmpty()) { // 读取到空行时, HTTP Header读取完毕
+                System.out.println();
                 break;
             }
             System.out.println(header);
@@ -124,12 +133,16 @@ class Handler extends Thread {
             // 发送成功响应:
             String data = "<html><body><h1>Hello, world!</h1></body></html>";
             int length = data.getBytes(StandardCharsets.UTF_8).length;
+
+            //Windows系统里面，每行结尾是“<回车><换行>”，即“\r\n”；
             writer.write("HTTP/1.0 200 OK\r\n");
             writer.write("Connection: close\r\n");
             writer.write("Content-Type: text/html\r\n");
             writer.write("Content-Length: " + length + "\r\n");
-            writer.write("\r\n"); // 空行标识Header和Body的分隔
-            //Windows系统里面，每行结尾是“<回车><换行>”，即“\r\n”；
+            //发送完Header后，再发送一个空行标识Header结束
+            // 空行标识Header和Body的分隔
+            writer.write("\r\n");
+
             writer.write(data);
             writer.flush();
         }
