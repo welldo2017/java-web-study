@@ -16,8 +16,8 @@ import java.util.Set;
  * 对于大型Web应用程序来说，通常需要避免使用Session机制。
  *
  * Cookie
- * 实际上，Servlet提供的HttpSession, 本质上就是通过一个名为JSESSIONID的Cookie来跟踪用户会话的。
- * 除了这个名称外，其他名称的Cookie我们可以任意使用。
+ * 实际上，Servlet提供的HttpSession, 本质上就是通过一个名为 JSESSIONID 的Cookie来跟踪用户会话的。
+ * 除了 JSESSIONID 这个名称外，其他名称的Cookie我们可以任意使用。
  *
  * 1. 如果我们想要设置一个Cookie，例如，记录用户选择的语言，可以编写一个LanguageServlet：(见代码)
  *
@@ -26,14 +26,12 @@ import java.util.Set;
  * Cookie在有效期内；
  * Cookie设置了secure时必须以https访问。
  *
- *
- *
  * author:welldo
  * date: 2021-09-14
  */
-
-@WebServlet(urlPatterns = "/pref")
-public class A_9_session_cookie_4 extends HttpServlet {
+//请求时，需要带上参数，http://localhost:8080/10cookie?lang=zh
+@WebServlet(urlPatterns = "/10cookie")
+public class A_10_cookie extends HttpServlet {
 
     private Set<String> LANGUAGES = new HashSet<>();
     {
@@ -44,9 +42,9 @@ public class A_9_session_cookie_4 extends HttpServlet {
 
     /**
      * 1. 创建一个新Cookie时，除了指定kv以外，通常需要设置setPath("/")，
-     * 浏览器根据此前缀决定是否发送Cookie。
-     * 如果一个Cookie调用了setPath("/user/")，那么浏览器只有在请求以/user/开头的路径时才会附加此Cookie。
-     * 最后通过resp.addCookie()把它添加到响应。
+     * 再通过resp.addCookie()把它添加到响应。
+     *
+     * 如果一个resp的 Cookie调用了setPath("/user/")，那么后续的请求，只有在请求以/user/开头的路径时，浏览器才会附加此Cookie。
      *
      * 3. 查看cookie 读取 {@link A_9_session_cookie_3}
      */
@@ -56,7 +54,7 @@ public class A_9_session_cookie_4 extends HttpServlet {
             // 创建一个新的Cookie:
             Cookie cookie = new Cookie("lang", lang);
             // 该Cookie生效的路径范围:
-            cookie.setPath("/home");
+            cookie.setPath("/93home");
             // 该Cookie有效期:(单位:s)
             cookie.setMaxAge(30); // 30s
 
@@ -68,7 +66,9 @@ public class A_9_session_cookie_4 extends HttpServlet {
             //lang=en; Max-Age=86400; Expires=Wed, 15-Sep-2021 09:36:45 GMT; Path=/
             resp.addCookie(cookie);
         }
-        resp.sendRedirect("/home");
+        //如果设置的不是en或者zh，则啥也不干。
+
+        resp.sendRedirect("/93home");
     }
 
 

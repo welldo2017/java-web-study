@@ -12,15 +12,15 @@ import java.io.IOException;
  * date: 2021-09-12 16:17
  */
 
-@WebServlet(urlPatterns = "/signout")
+@WebServlet(urlPatterns = "/92signout")
 public class A_9_session_cookie_2 extends HttpServlet {
 
-    protected void doGet(HttpServletRequest req, HttpServletResponse resp) throws ServletException, IOException {
+    protected void doGet(HttpServletRequest req, HttpServletResponse resp) throws  IOException {
         // 从HttpSession移除用户名:
         HttpSession session = req.getSession();
         session.removeAttribute("user");
 
-        resp.sendRedirect("/home");
+        resp.sendRedirect("/93home");
     }
 
 

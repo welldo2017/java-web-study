@@ -14,10 +14,10 @@ import java.io.PrintWriter;
  * date: 2021-09-12 16:17
  */
 
-@WebServlet(urlPatterns = "/home")
+@WebServlet(urlPatterns = "/93home")
 public class A_9_session_cookie_3 extends HttpServlet {
 
-    protected void doGet(HttpServletRequest req, HttpServletResponse resp) throws ServletException, IOException {
+    protected void doGet(HttpServletRequest req, HttpServletResponse resp) throws  IOException {
         // 从HttpSession获取当前用户名:
         String user = (String) req.getSession().getAttribute("user");
 
@@ -28,16 +28,17 @@ public class A_9_session_cookie_3 extends HttpServlet {
         pw.write("<h1>Welcome, " + (user != null ? user : "访客") + "</h1>");
         if (user == null) {
             // 未登录，显示登录链接:
-            pw.write("<p><a href=\"/signin\">Sign In</a></p>");
+            pw.write("<p><a href=\"/9signin\">Sign In 去登录页面</a></p>");
         } else {
             // 已登录，显示登出链接:
-            pw.write("<p><a href=\"/signout\">Sign Out</a></p>");
+            pw.write("<p><a href=\"/92signout\">Sign Out</a></p>");
         }
 
         //获取cookie
         String s = parseLanguageFromCookie(req);
-        pw.write("<p>当前语言为: "+s+"</p>");
+        pw.write("<p>当前您的语言为: "+s+",30s过期</p>");
 
+        pw.write("<h2>from 93</h2>");
         pw.flush();
     }
 
@@ -58,7 +59,7 @@ public class A_9_session_cookie_3 extends HttpServlet {
             }
         }
         // 返回默认值:
-        return "en";
+        return "no";
     }
 
 
