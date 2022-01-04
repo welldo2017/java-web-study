@@ -12,7 +12,7 @@ package com.welldo.web;
  * 3.JavaEE并不是一个软件产品，它更多的是一种软件架构和设计思想。
  * 我们可以把JavaEE看作是在JavaSE的基础上，开发的一系列基于服务器的组件、API标准和通用架构。
  *
- * 4. JavaEE最核心的组件就是基于Servlet标准的Web服务器，开发者编写的应用程序是基于Servlet API并运行在Web服务器内部的：
+ * 4. JavaEE最核心的组件就是基于 Servlet 标准的Web服务器，开发者编写的应用程序是基于Servlet API并运行在Web服务器内部的：
  * ┌─────────────┐
  * │┌───────────┐│
  * ││ User App  ││
@@ -28,7 +28,7 @@ package com.welldo.web;
  * JAAS：...
  * JCA：...
  * JMS：Java Message Service，用于消息服务；
- * JTA：...
+ * JTA：Java Transaction API，用于分布式事务；
  * JAX-WS：...
  * ...
  *

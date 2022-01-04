@@ -41,14 +41,13 @@ import java.util.concurrent.ConcurrentHashMap;
  * } else if (path.equals("/signin")) {
  *     dispatchTo(signinServlet);
  * } else {
- *     // 所有未匹配的路径均转发到"/"
+ *     // 所有未匹配的路径均转发到"/"  {@link A_6_Servlet_2}
  *     dispatchTo(indexServlet);
  * }
  *
- * 见代码
- * 这3个类,分别处理 /a, /b ,/ 三个请求
- * {@link A_6_Servlet_1}
- * {@link A_6_Servlet_2}
+ * 见代码 * 本类(处理/6a)和下面这2个类
+ * {@link A_6_Servlet_1}    处理/6b
+ * {@link A_6_Servlet_2}    处理/
  *
  * 2. HttpServletRequest
  * HttpServletRequest 封装了一个HTTP请求，它 继承了ServletRequest。
@@ -69,8 +68,6 @@ import java.util.concurrent.ConcurrentHashMap;
  * author:welldo
  * date: 2021-09-12 16:17
  */
-
-
 @WebServlet(urlPatterns = "/6a")
 public class A_6_Servlet extends HttpServlet {
 

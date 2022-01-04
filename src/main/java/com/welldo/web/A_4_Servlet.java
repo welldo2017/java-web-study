@@ -26,17 +26,20 @@ import java.io.PrintWriter;
  * ┌───────┐  HTTP  ├───────────┤
  * │Browser│<──────>│Web Server │现成web服务器提供(处理socket,TCP连接，解析HTTP协议等, 也就是{@link A_3_HttpServer} 中代码要做的工作)
  * └───────┘        └───────────┘
- * 看代码.
+ *
+ * 2.我们来实现一个最简单的Servlet(看代码)
  *
  *
  * 3.如何启动？？？
- * 普通的Java程序是通过启动JVM，然后通过java -jar 执行main()方法开始运行。
- * 但是Web应用程序有所不同，我们无法直接运行war文件，必须先启动Web服务器，
- * 再由Web服务器加载我们编写的HelloServlet，这样就可以让HelloServlet处理浏览器发送的请求。
+ * 3.0 执行maven打包操作,这里会打成war包
+ * 平时我们启动jar包,直接使用java -jar 命令,命令自动执行main()方法开始运行。
+ * 但是Web应用程序有所不同，我们无法直接运行war包文件，必须先启动Web服务器，
+ * 再由Web服务器加载war包中我们编写的HelloServlet，这样就可以让HelloServlet处理浏览器发送的请求。
  *
  *
  * 3.1 支持Servlet API的Web服务器。常用的服务器有：
  *      Tomcat：由Apache开发的开源免费服务器；
+ *      Jetty：由Eclipse开发的开源免费服务器；
  *      等....
  *      收费,商用: Oracle的WebLogic，IBM的WebSphere。
  * 无论使用哪个服务器，只要它支持Servlet API 4.0（因为我们引入的Servlet版本是4.0），我们的war包都可以在上面运行。
@@ -63,16 +66,25 @@ import java.io.PrintWriter;
  *      Servlet容器只会给每个Servlet类创建唯一实例；
  *      Servlet容器会使用多线程执行doGet()或doPost()方法。
  *
+ * 6.总结
+ * 编写Web应用程序就是编写Servlet处理HTTP请求；
+ * Servlet API提供了HttpServletRequest和HttpServletResponse两个高级接口来封装HTTP请求和响应；
+ * Web应用程序必须按固定结构组织并打包为.war文件；
+ * 需要启动Web服务器来加载我们的war包来运行Servlet。
+ *
  * author:welldo
  * date: 2021-09-12 16:17
  */
 
-//1. 一个Servlet总是继承自 HttpServlet，然后覆写doGet()或doPost()方法。
 
+/*
+ 2.我们来实现一个最简单的Servlet：
+ 一个Servlet总是继承自 HttpServlet，然后覆写doGet()或doPost()方法。
 
-//每个Servlet通过注解说明自己能处理的请求。
-// (早期的Servlet需要在web.xml中配置映射路径，现在只需要通过注解就可以完成映射。)
-// WebServlet注解表示这是一个Servlet，并映射到地址/:
+ 每个Servlet通过注解说明自己能处理的请求。
+ (早期的Servlet需要在web.xml中配置映射路径，现在只需要通过注解就可以完成映射。)
+ WebServlet注解表示这是一个Servlet，并映射到地址/:
+ */
 @WebServlet(urlPatterns = "/4")
 public class A_4_Servlet extends HttpServlet {
 
@@ -88,10 +100,10 @@ public class A_4_Servlet extends HttpServlet {
      *  <groupId>javax.servlet</groupId>
      *  <artifactId>javax.servlet-api</artifactId>
      *  <version>4.0.0</version>
+     * (注意,还要打包成war包,不是jar)
      *
      * 2. 我们还需要在 src/main/webapp/WEB-INF 目录下创建一个web.xml描述文件
      * 文件内容固定(详见文件)
-     * 执行maven打包操作
      */
     protected void doGet(HttpServletRequest req, HttpServletResponse resp) throws IOException {
         //获取请求参数

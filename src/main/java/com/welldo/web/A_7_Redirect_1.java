@@ -19,17 +19,17 @@ import java.util.concurrent.ConcurrentHashMap;
 @WebServlet(urlPatterns = "/7hi")
 public class A_7_Redirect_1 extends HttpServlet {
 
-    //如果收到的路径为/hi，希望能重定向到/hello，
+    //如果收到的路径为/7hi，希望能重定向到/7hello，
     @Override
     protected void doGet(HttpServletRequest req, HttpServletResponse resp) throws ServletException, IOException {
         //默认302重定向
-        // resp.sendRedirect("/hello");
+        resp.sendRedirect("/7hello");
 
         //带有参数的302
         // redirect302(req,resp);
 
         //永久301
-        redirect301(req,resp);
+        // redirect301(req,resp);
 
     }
 
@@ -37,7 +37,7 @@ public class A_7_Redirect_1 extends HttpServlet {
         //默认302重定向
         //如果带有参数，我们需要构造 重定向的路径
         String name = req.getParameter("name");
-        String redirectToUrl = "/hello" + (name == null ? "" : "?name=" + name);
+        String redirectToUrl = "/7hello" + (name == null ? "" : "?name=" + name);
         resp.sendRedirect(redirectToUrl);
     }
 
@@ -50,7 +50,7 @@ public class A_7_Redirect_1 extends HttpServlet {
      */
     private void redirect301(HttpServletRequest req,HttpServletResponse resp) throws IOException {
         resp.setStatus(HttpServletResponse.SC_MOVED_PERMANENTLY); // 301
-        resp.setHeader("Location", "/hello");
+        resp.setHeader("Location", "/7hello");
     }
 
 

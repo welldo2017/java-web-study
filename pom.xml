@@ -24,15 +24,15 @@
 
     <dependencies>
         <!--如果引用了tomcat,就不再需要servlet，因为Tomcat 引入了Servlet API 依赖 -->
-<!--
+        <!--表示编译时使用，但不会打包到.war文件中，因为运行期Web服务器本身已经提供了Servlet API相关的jar包。-->
+        <!--
         <dependency>
             <groupId>javax.servlet</groupId>
             <artifactId>javax.servlet-api</artifactId>
             <version>4.0.0</version>
-            &lt;!&ndash;表示编译时使用，但不会打包到.war文件中，因为运行期Web服务器本身已经提供了Servlet API相关的jar包。&ndash;&gt;
             <scope>provided</scope>
         </dependency>
--->
+        -->
 
 
         <!--引入tomcat所有jar包-->

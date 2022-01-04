@@ -15,7 +15,7 @@ import java.nio.charset.StandardCharsets;
  *
  *
  * 1.编写HTTP Server(见代码)
- * 一个 HTTP Server本质上是一个TCP服务器，我们先用多线程实现 "TCP编程的 的服务器"：(见代码)
+ * 一个 HTTP Server本质上是一个TCP服务器，我们先用多线程去实现一个 "TCP编程的 服务器"：(见代码)
  *
  * 在开发网络应用程序的时候，我们又会遇到Socket这个概念。
  * Socket是一个抽象概念，一个应用程序通过一个Socket来建立一个远程连接，而Socket内部通过TCP/IP协议把数据传输到网络：
@@ -30,7 +30,7 @@ import java.nio.charset.StandardCharsets;
  * ├───────────┤      ┌──────┐       ┌──────┐      ├───────────┤
  * │    IP     │<────>│Router│<─────>│Router│<────>│    IP     │
  * └───────────┘      └──────┘       └──────┘      └───────────┘
- * Socket、TCP和部分IP的功能都是由操作系统提供的，Java提供的几个Socket相关的类就封装了操作系统提供的接口。
+ * !!! Socket、TCP和部分IP的功能都是由操作系统提供的，Java提供的几个Socket相关的类就封装了操作系统提供的接口。
  *
  *
  * 2.各个版本的区别（不用仔细研究）
@@ -39,10 +39,9 @@ import java.nio.charset.StandardCharsets;
  * 版本浏览器每次建立TCP连接后，只发送一个HTTP请求并接收一个HTTP响应，然后就关闭TCP连接。
  * 由于创建TCP连接本身就需要消耗一定的时间，所以1.0 版本很慢,
  *
- * 1.1(主流版本):
+ * 1.1(主流版本):   大部分Web服务器都基于HTTP/1.1协议
  * 因为1.0的缺点,因此，HTTP 1.1允许浏览器和服务器在同一个TCP连接上反复发送、接收多个HTTP请求和响应，
  * 这样就大大提高了传输效率。
- * 大部分Web服务器都基于HTTP/1.1协议
  *
  * 2.0():
  * 我们注意到HTTP协议是一个请求-响应协议，它总是发送一个请求，然后接收一个响应。
@@ -63,6 +62,12 @@ public class A_3_HttpServer {
     public static void main(String[] args) throws IOException {
         ServerSocket ss = new ServerSocket(8080); // 监听我们编写的HTTP Server的8080端口.
         System.out.println("server is running...");
+
+        /*
+        这里的for循环,不会无休止地转下去
+        因为accept()方法:   监听此socket的连接并接受它的返回值。该方法会一直阻塞，直到建立连接为止
+        相当于这一步,把for循环给卡住了
+         */
         for (; ; ) {
             Socket sock = ss.accept();
             System.out.println("connected from " + sock.getRemoteSocketAddress());
@@ -82,7 +87,7 @@ class Handler extends Thread {
     public void run() {
         try (InputStream input = this.sock.getInputStream();
              OutputStream output = this.sock.getOutputStream()) {
-            handle(input, output);
+            handle(input, output);//核心代码
         } catch (Exception e) {
             try {
                 this.sock.close();
@@ -99,7 +104,7 @@ class Handler extends Thread {
      * 发送响应的时候，首先发送响应代码HTTP/1.0 200 OK
      * 然后，依次发送Header，
      * 发送完Header后，再发送一个空行标识Header结束，
-     * 紧接着发送HTTP Body，在浏览器输入http://local.liaoxuefeng.com:8080/就可以看到响应页面：
+     * 紧接着发送HTTP Body，在浏览器输入 http://local.liaoxuefeng.com:8080/ 就可以看到响应页面：
      */
     private void handle(InputStream input, OutputStream output) throws IOException {
 
@@ -116,7 +121,7 @@ class Handler extends Thread {
         for (; ; ) {
             String header = reader.readLine();
             if (header.isEmpty()) { // 读取到空行时, HTTP Header读取完毕
-                System.out.println();
+                System.out.println("空行-----------");
                 break;
             }
             System.out.println(header);

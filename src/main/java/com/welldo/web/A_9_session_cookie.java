@@ -1,6 +1,5 @@
 package com.welldo.web;
 
-import javax.servlet.ServletException;
 import javax.servlet.annotation.WebServlet;
 import javax.servlet.http.*;
 import java.io.IOException;
@@ -17,7 +16,7 @@ import java.util.Map;
  * 1. Session
  * 基于唯一ID识别用户身份的机制称为Session:
  * 每个用户第一次访问服务器后，会自动获得一个Session ID。如果用户在一段时间内没有访问服务器，那么Session会自动失效，
- * 下次带着失效的Session ID访问，服务器分配新的.
+ * 如果带着失效的Session ID访问，服务器会分配新的.
  *
  * JavaEE的Servlet机制内建了对Session的支持。
  * 我们以登录为例，当一个用户登录成功后，我们就可以把这个用户的名字放入一个HttpSession对象，

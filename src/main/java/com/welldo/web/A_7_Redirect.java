@@ -7,19 +7,17 @@ import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpServletResponse;
 import java.io.IOException;
 import java.io.PrintWriter;
-import java.util.Map;
-import java.util.concurrent.ConcurrentHashMap;
 
 /**
  * Redirect 重定向.
  * 重定向是指：当浏览器请求一个URL时，服务器返回一个重定向指令，告诉浏览器地址已经变了，麻烦使用新的URL再重新发送新请求。
  * （所以浏览器会发两次请求）
  *
- * 1. 我们已经编写了一个能处理/hello的servlet（本类），如果收到的路径为/hi，希望能重定向到/hello，{@link A_7_Redirect_1}
+ * 1. 我们已经编写了一个能处理 /7hello 的servlet（本类），如果收到的路径为 /7hi，希望能重定向到/7hello，{@link A_7_Redirect_1}
  *
  * 2. 如果浏览器发送GET /hi请求，hiServlet将处理此请求。由于hiServlet在内部又返回了"重定向响应"，因此，浏览器会收到如下响应：
  * Status Code: 302
- * Location: /hello
+ * Location: /7hello
  *
  * 当浏览器收到302响应后，它会立刻根据Location的指示发送一个新的GET /hello请求，这个过程就是重定向：
  * ┌───────┐   GET /hi     ┌───────────────┐
