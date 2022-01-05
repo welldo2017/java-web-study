@@ -17,6 +17,7 @@ import java.util.Set;
  *
  * Cookie
  * 实际上，Servlet提供的HttpSession, 本质上就是通过一个名为 JSESSIONID 的Cookie来跟踪用户会话的。
+ * Cookie是kv格式:{JSESSIONID, Session ID}
  * 除了 JSESSIONID 这个名称外，其他名称的Cookie我们可以任意使用。
  *
  * 1. 如果我们想要设置一个Cookie，例如，记录用户选择的语言，可以编写一个LanguageServlet：(见代码)

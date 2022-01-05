@@ -9,7 +9,7 @@ import java.util.Map;
 
 /**
  * 0.
- * 因为HTTP协议是一个无状态协议，即Web应用程序无法区分收到的两个HTTP请求是否是同一个浏览器发出的。
+ * 因为HTTP协议是一个无状态协议，即 Web服务器 无法区分收到的两个HTTP请求是否是同一个浏览器发出的。
  * 为了跟踪用户状态，服务器可以向浏览器分配一个唯一ID，并以Cookie的形式发送到浏览器，浏览器在后续访问时总是附带此Cookie，
  * 这样，服务器就可以识别用户身份。
  *
@@ -32,14 +32,14 @@ import java.util.Map;
  * 服务器识别Session的关键，依靠一个名为JSESSIONID的Cookie。
  * 在Servlet中第一次调用req.getSession()时，Servlet容器自动创建一个Session ID，然后通过一个名为JSESSIONID的Cookie发送给浏览器
  *
- * 这里要注意的几点是：todo 没有理解
+ * 这里要注意的几点是：
  *      JSESSIONID是由Servlet容器自动创建的，目的是维护一个浏览器会话，它和我们的登录逻辑没有关系；
  *      登录和登出的业务逻辑是我们自己根据HttpSession是否存在一个"user"的Key判断的，登出后，Session ID并不会改变；
  *      即使没有登录功能，仍然可以使用HttpSession追踪用户，例如，放入一些用户配置信息等。
  *
  * 3.1 使用Session时，由于服务器把所有用户的Session都存储在内存中，
  * 如果遇到内存不足的情况，就需要把部分不活动的Session序列化到磁盘上，这会大大降低服务器的运行效率，
- * 因此，放入Session的对象,最好比较小，通常我们放入一个简单的User对象就足够了：
+ * 因此，放入Session的对象,最好比较小，通常我们放入一个简单的User对象就足够了：(session.setAttribute("user", name);)
  * public class User {
  *     public long id; // 唯一标识
  *     public String email;
@@ -70,6 +70,7 @@ import java.util.Map;
  * 无论采用何种方案，使用Session机制，会使得Web Server的集群很难扩展，
  * 因此，Session适用于中小型Web应用程序。
  * 对于大型Web应用程序来说，通常需要避免使用Session机制。{@link A_10_cookie}
+ * (todo 不用session,那用什么呢? token,jwt,等等,待确认)
  *
  * author:welldo
  * date: 2021-09-12 16:17

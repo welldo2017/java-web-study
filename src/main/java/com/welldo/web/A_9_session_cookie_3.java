@@ -1,6 +1,5 @@
 package com.welldo.web;
 
-import javax.servlet.ServletException;
 import javax.servlet.annotation.WebServlet;
 import javax.servlet.http.Cookie;
 import javax.servlet.http.HttpServlet;
@@ -13,7 +12,6 @@ import java.io.PrintWriter;
  * author:welldo
  * date: 2021-09-12 16:17
  */
-
 @WebServlet(urlPatterns = "/93home")
 public class A_9_session_cookie_3 extends HttpServlet {
 
@@ -59,7 +57,7 @@ public class A_9_session_cookie_3 extends HttpServlet {
             }
         }
         // 返回默认值:
-        return "no";
+        return "not set Lang";
     }
 
 

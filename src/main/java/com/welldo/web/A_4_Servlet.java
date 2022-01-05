@@ -120,7 +120,7 @@ public class A_4_Servlet extends HttpServlet {
         // http://localhost:8080/?name=Bob
         // http://localhost:8080
         if (name == null || name.length()== 0) {
-            pw.write("<h1>Hello, web-world!  by 张三4 </h1>");
+            pw.write("<h1>Hello, web-world!  游客 from4 </h1>");
         }else {
             pw.write("<h1>Hello, web-world!  by "+ name+" </h1>");
         }

@@ -5,7 +5,7 @@
 %>
 <html>
 <head>
-    <title>Hello World - JSP</title>
+    <title>Hello mvc - JSP</title>
 </head>
 <body>
     <h1>Hello <%= user.name %>!</h1>

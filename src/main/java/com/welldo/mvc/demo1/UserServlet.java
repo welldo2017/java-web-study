@@ -8,7 +8,7 @@ import javax.servlet.http.HttpServletResponse;
 import java.io.IOException;
 
 /**
- * MVC
+ * MVC开发
  *
  * 0. 我们把UserServlet看作业务逻辑处理， * 把User看作模型， * 把user.jsp看作渲染，
  * 这种设计模式通常被称为MVC：Model-View-Controller，

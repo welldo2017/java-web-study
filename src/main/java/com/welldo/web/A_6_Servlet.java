@@ -55,7 +55,8 @@ import java.util.concurrent.ConcurrentHashMap;
  *  但实际上除了HTTP外，并没有其他协议会用Servlet处理，所以这是一个过度设计。)
  *
  *  2.1 通过HttpServletRequest提供的接口方法可以拿到HTTP请求的几乎全部信息
- *  2.2 ServletRequest 还有两个方法：setAttribute()和getAttribute()，
+ *  详见: {@link A_6_Servlet_1}
+ *  2.2 此外, ServletRequest 还有两个方法：setAttribute()和getAttribute()，
  *  可以给当前HttpServletRequest对象附加多个Key-Value，相当于把HttpServletRequest当作一个Map<String, Object>使用。
  *
  *

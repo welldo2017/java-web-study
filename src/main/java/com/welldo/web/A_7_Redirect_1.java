@@ -15,7 +15,7 @@ import java.util.concurrent.ConcurrentHashMap;
  * author:welldo
  * date: 2021-09-12 16:17
  */
-
+//todo 7hi 访问不成功,
 @WebServlet(urlPatterns = "/7hi")
 public class A_7_Redirect_1 extends HttpServlet {
 

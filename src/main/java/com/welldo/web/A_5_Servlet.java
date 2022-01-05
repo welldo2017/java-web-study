@@ -57,9 +57,9 @@ public class A_5_Servlet extends HttpServlet {
         PrintWriter pw = resp.getWriter();
 
         if (name == null || name.length() == 0) {
-            pw.write("<h1>Hello, web-world!  by mytomcat 张三5 </h1>");
+            pw.write("<h1>Hello, web-world!  by mytomcat, 游客, from5 </h1>");
         } else {
-            pw.write("<h1>Hello, web-world!  by mytomcat " + name + " </h1>");
+            pw.write("<h1>Hello, web-world!  by mytomcat, " + name + ", from5 </h1>");
         }
         pw.flush();
     }

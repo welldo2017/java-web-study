@@ -1,6 +1,5 @@
 package com.welldo.web;
 
-import javax.servlet.ServletException;
 import javax.servlet.annotation.WebServlet;
 import javax.servlet.http.*;
 import java.io.IOException;
@@ -11,7 +10,6 @@ import java.io.IOException;
  * author:welldo
  * date: 2021-09-12 16:17
  */
-
 @WebServlet(urlPatterns = "/92signout")
 public class A_9_session_cookie_2 extends HttpServlet {
 
