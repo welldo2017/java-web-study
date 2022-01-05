@@ -8,6 +8,8 @@ import javax.servlet.http.HttpServletRequest;
 import java.io.IOException;
 
 /**
+ * Filter可以对请求进行预处理，因此，我们可以把很多公共预处理逻辑放到Filter中完成。
+ *
  * 编写Filter时，必须实现Filter接口，在doFilter()方法内部，要继续处理请求，必须调用chain.doFilter()。
  * 最后，用@WebFilter注解标注该Filter需要过滤的URL。这里的/*表示所有路径。
  *

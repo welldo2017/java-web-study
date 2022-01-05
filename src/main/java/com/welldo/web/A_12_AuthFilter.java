@@ -14,7 +14,6 @@ import java.io.IOException;
  *  ==如果一个请求路径类似/test，那么它会被上述2个Filter依次处理（不会被AuthFilter处理）。
  *
  */
-
 // @WebFilter(urlPatterns = "/user/*")  //这是第1种写法,不可以定义顺序,
 @WebFilter(filterName ="A_12_AuthFilter")  //这是第二种写法,可以定义顺序,
 public class A_12_AuthFilter implements Filter {
