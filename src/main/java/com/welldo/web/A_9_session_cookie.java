@@ -40,11 +40,7 @@ import java.util.Map;
  * 3.1 使用Session时，由于服务器把所有用户的Session都存储在内存中，
  * 如果遇到内存不足的情况，就需要把部分不活动的Session序列化到磁盘上，这会大大降低服务器的运行效率，
  * 因此，放入Session的对象,最好比较小，通常我们放入一个简单的User对象就足够了：(session.setAttribute("user", name);)
- * public class User {
- *     public long id; // 唯一标识
- *     public String email;
- *     public String name;
- * }
+ *
  *
  * 3.2 在使用多台服务器构成集群时，使用Session会遇到一些额外的问题。
  * 通常，多台服务器集群使用反向代理作为网站入口：
@@ -63,14 +59,15 @@ import java.util.Map;
  * 即从Web Server 1登录后，如果后续请求被转发到Web Server 2或3，那么用户看到的仍然是未登录状态。
  * 要解决这个问题，
  * 方案1: 在所有Web Server之间进行Session复制，会有严重网络io，并且，每个Web Server的内存均存储所有用户的Session，浪费内存。
- * 方案2: 采用粘滞会话（Sticky Session）机制，
- * 即反向代理在转发请求的时候，总是根据JSESSIONID的值判断，相同的JSESSIONID总是转发到固定的Web Server，但这需要反向代理的支持。
- *
+ * 方案2: xxx
  *
  * 无论采用何种方案，使用Session机制，会使得Web Server的集群很难扩展，
- * 因此，Session适用于中小型Web应用程序。
- * 对于大型Web应用程序来说，通常需要避免使用Session机制。{@link A_10_cookie}
- * (todo 不用session,那用什么呢? token,jwt,等等,待确认)
+ * 因此，Session适用于中小型Web应用程序。对于大型Web应用程序来说，通常需要避免使用Session机制。
+ * 推荐使用token
+ * token可以是字符串(去redis中查询是否存在),token也可以是jwt) 请参考: https://blog.csdn.net/weixin_45070175/article/details/118559272
+ *
+ * 4.
+ * {@link A_10_cookie}
  *
  * author:welldo
  * date: 2021-09-12 16:17

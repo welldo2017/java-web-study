@@ -11,10 +11,6 @@ import java.util.HashSet;
 import java.util.Set;
 
 /**
- * 0. 无论采用何种方案，使用Session机制，会使得Web Server的集群很难扩展，
- * 因此，Session适用于中小型Web应用程序。
- * 对于大型Web应用程序来说，通常需要避免使用Session机制。
- *
  * Cookie
  * 实际上，Servlet提供的HttpSession, 本质上就是通过一个名为 JSESSIONID 的Cookie来跟踪用户会话的。
  * Cookie是kv格式:{JSESSIONID, Session ID}

@@ -16,13 +16,13 @@ import java.io.PrintWriter;
  * 0.1
  * 因此，在JavaEE平台上，处理socket连接,TCP连接，解析HTTP协议,这些底层工作统统扔给现成的Web服务器去做，
  * 我们只需要编写自己的应用程序, 并让它跑在Web服务器上即可.
- * 为了实现这一目的，JavaEE提供了Servlet API，我们使用Servlet API编写自己的Servlet来处理HTTP请求，
- * Web服务器实现Servlet API接口，实现底层功能：
+ * 为了实现这一目的，JavaEE提供了Servlet API接口，我们使用Servlet API编写自己的Servlet来处理HTTP请求，
+ * Web服务器实现了Servlet API接口，实现底层功能：
  *
  *                  ┌───────────┐
  *                  │My Servlet │   程序员编写
  *                  ├───────────┤
- *                  │Servlet API│   javaEE提供
+ *                  │Servlet API│   javaEE提供的接口
  * ┌───────┐  HTTP  ├───────────┤
  * │Browser│<──────>│Web Server │现成web服务器提供(处理socket,TCP连接，解析HTTP协议等, 也就是{@link A_3_HttpServer} 中代码要做的工作)
  * └───────┘        └───────────┘
@@ -42,7 +42,7 @@ import java.io.PrintWriter;
  *      Jetty：由Eclipse开发的开源免费服务器；
  *      等....
  *      收费,商用: Oracle的WebLogic，IBM的WebSphere。
- * 无论使用哪个服务器，只要它支持Servlet API 4.0（因为我们引入的Servlet版本是4.0），我们的war包都可以在上面运行。
+ * 无论使用哪个服务器，只要它支持Servlet API 4.0（因为我们引入的Servlet版本是4.0），我们的war包就可以在上面运行。
  *
  * 3.2
  * 下载Tomcat服务器，解压后，把hello.war复制到Tomcat的webapps目录下，
@@ -96,14 +96,17 @@ public class A_4_Servlet extends HttpServlet {
      *
      * 1.1 Servlet API是谁提供？
      * Servlet API是一个jar包，我们需要通过Maven来引入它，才能正常编译。
-     * 详情见pom.xml文件
-     *  <groupId>javax.servlet</groupId>
-     *  <artifactId>javax.servlet-api</artifactId>
-     *  <version>4.0.0</version>
+     * javax.servlet:javax.servlet-api:4.0.0
      * (注意,还要打包成war包,不是jar)
      *
      * 2. 我们还需要在 src/main/webapp/WEB-INF 目录下创建一个web.xml描述文件
-     * 文件内容固定(详见文件)
+     * 文件内容固定
+     * <!DOCTYPE web-app PUBLIC
+     *  "-//Sun Microsystems, Inc.//DTD Web Application 2.3//EN"
+     *  "http://java.sun.com/dtd/web-app_2_3.dtd">
+     * <web-app>
+     *   <display-name>Archetype Created Web Application</display-name>
+     * </web-app>
      */
     protected void doGet(HttpServletRequest req, HttpServletResponse resp) throws IOException {
         //获取请求参数

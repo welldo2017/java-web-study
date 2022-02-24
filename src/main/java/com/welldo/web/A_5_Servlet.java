@@ -28,8 +28,8 @@ import java.io.PrintWriter;
  * 修改pom文件。
  * 编写Servlet
  *
- * 3. 增加main（）方法 {@link A_5_Servlet_Main}
- * 直接运行main()方法，即可启动嵌入式Tomcat服务器
+ * 3.
+ * 编写启动嵌入式Tomcat服务器的main()方法 * {@link A_5_Servlet_Main}
  *
  * 3.5 好处：
  * 通过main()方法启动Tomcat服务器并加载我们自己的webapp有如下好处：

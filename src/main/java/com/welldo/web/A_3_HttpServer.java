@@ -15,11 +15,13 @@ import java.nio.charset.StandardCharsets;
  *
  *
  * 1.编写HTTP Server(见代码)
- * 一个 HTTP Server本质上是一个TCP服务器，我们先用多线程去实现一个 "TCP编程的 服务器"：(见代码)
  *
  * 在开发网络应用程序的时候，我们又会遇到Socket这个概念。
- * Socket是一个抽象概念，一个应用程序通过一个Socket来建立一个远程连接，而Socket内部通过TCP/IP协议把数据传输到网络：
- * (也就是说,socket封装了 tcp)
+ * Socket 只是个接口不是协议,它是对 TCP/IP 协议的封装(也可以封装udp),通过 Socket 我们才能使用 TCP/IP 协议
+ * 也就是说,一个应用程序,需要调用Socket来建立一个远程连接，而Socket内部通过TCP/IP协议把数据传输到网络：
+ *
+ * 所以,一个 HTTP Server是一个socket服务器,本质上是一个tcp服务器.
+ * 我们用多线程去实现一个 "TCP编程的 服务器"：(见代码)
  *
  * ┌───────────┐                                   ┌───────────┐
  * │Application│                                   │Application│
@@ -37,7 +39,8 @@ import java.nio.charset.StandardCharsets;
  * HTTP目前有多个版本，
  * 1.0(已经淘汰) :
  * 版本浏览器每次建立TCP连接后，只发送一个HTTP请求并接收一个HTTP响应，然后就关闭TCP连接。
- * 由于创建TCP连接本身就需要消耗一定的时间，所以1.0 版本很慢,
+ * 由于创建TCP连接本身就需要消耗一定的时间，所以1.0 版本很慢
+ * (可以推导出,http是短链接,socket(tcp)是长连接)
  *
  * 1.1(主流版本):   大部分Web服务器都基于HTTP/1.1协议
  * 因为1.0的缺点,因此，HTTP 1.1允许浏览器和服务器在同一个TCP连接上反复发送、接收多个HTTP请求和响应，
@@ -69,7 +72,7 @@ public class A_3_HttpServer {
         相当于这一步,把for循环给卡住了
          */
         for (; ; ) {
-            Socket sock = ss.accept();
+            Socket sock = ss.accept(); //The method blocks until a connection is made.
             System.out.println("connected from " + sock.getRemoteSocketAddress());
             Thread t = new Handler(sock);
             t.start();
