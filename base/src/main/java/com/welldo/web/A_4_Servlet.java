@@ -125,7 +125,7 @@ public class A_4_Servlet extends HttpServlet {
         if (name == null || name.length()== 0) {
             pw.write("<h1>Hello, web-world!  游客 from4 </h1>");
         }else {
-            pw.write("<h1>Hello, web-world!  by "+ name+" </h1>");
+            pw.write("<h1>Hello, web-world! "+ name+" from4 </h1>");
         }
 
         // 最后不要忘记flush强制输出:

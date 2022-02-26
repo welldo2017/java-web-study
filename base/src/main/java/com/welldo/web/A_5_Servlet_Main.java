@@ -30,13 +30,15 @@ import java.io.File;
         tomcat.setPort(Integer.getInteger("port", 8080));
         tomcat.getConnector();
         // 通过这个方法，创建webapp，Tomcat会加载当前工程作为根webapp
-        Context ctx = tomcat.addWebapp("", new File("src/main/webapp").getAbsolutePath());
+        Context ctx = tomcat.addWebapp("", new File("base/src/main/webapp").getAbsolutePath());
 
         WebResourceRoot resources = new StandardRoot(ctx);
         resources.addPreResources(
-                new DirResourceSet(resources, "/WEB-INF/classes",
-                        // 注意，internalPath 这个参数，需要弄明白 todo
-                        new File("target/classes").getAbsolutePath(), "/")
+                new DirResourceSet(
+                        resources,
+                        "/WEB-INF/classes",
+                        new File("base/target/classes").getAbsolutePath(),
+                        "/")
         );
         ctx.setResources(resources);
         tomcat.start();
