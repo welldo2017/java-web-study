@@ -27,7 +27,7 @@ import java.util.*;
 /**
  * 3.
  * 在MVC框架中,创建一个接收所有请求的Servlet，(也就是映射到 / ), 通常我们把它命名为DispatcherServlet
- * 然后，根据 Controller的方法定义的@Get或@Post的 Path,决定调用哪个方法，
+ * 然后，根据 xxxController的方法定义的@Get或@Post的 Path,决定调用哪个方法，
  * 最后，获得方法返回的ModelAndView后，渲染模板，写入HttpServletResponse，
  * 即完成了整个MVC的处理。
  *
@@ -66,9 +66,15 @@ public class DispatcherServlet extends HttpServlet {
     private final Logger logger = LoggerFactory.getLogger(getClass());
     private ViewEngine viewEngine;
 
-    // "请求路径" 与某个 xxxDispatcher 的映射：
-    private Map<String ,GetDispatcher> getMappings = new HashMap<>();//string是请求路径, xxDispatcher是处理这个请求的类
+    /**
+     * 3.1 "请求" 与某个 xxxDispatcher 的映射：
+     * 在 init（） 方法中，对这两个map进行初始化
+     * string是请求路径, xxDispatcher是处理这个请求的类
+     * 如果string1和string2 都是 GetDispatcher 处理，也是两个不同的 GetDispatcher的实例。
+     */
+    private Map<String ,GetDispatcher> getMappings = new HashMap<>();
     private Map<String ,PostDispatcher> postMappings = new HashMap<>();
+
 
     /*
     将所有的controller,放到这个list中.
@@ -80,6 +86,8 @@ public class DispatcherServlet extends HttpServlet {
         controllers.add(IndexController.class);
         controllers.add(UserController.class);
     }
+
+
 
     //列出get 请求支持的参数类型
     private static final Set<Class<?>> supportedGetParameterTypes = new HashSet<>();
@@ -104,13 +112,13 @@ public class DispatcherServlet extends HttpServlet {
 
 
 
-    //入口方法
+    //入口方法,每处理一个请求，就执行一次。
     @Override
     protected void doGet(HttpServletRequest request, HttpServletResponse response) throws IOException, ServletException {
         process(request,response,this.getMappings);
     }
 
-    //入口方法
+    //入口方法,每处理一个请求，就执行一次。
     @Override
     protected void doPost(HttpServletRequest request, HttpServletResponse response) throws IOException, ServletException {
         process(request,response,this.postMappings);
@@ -126,7 +134,6 @@ public class DispatcherServlet extends HttpServlet {
 
         //http://localhost:8080/blue/test
         // request.getRequestURI()得到的就是  /blue/test
-        // request.getContextPath()得到的就是  /blue
         String path = request.getRequestURI().substring(request.getContextPath().length()); //得到 test
 
         // 根据路径查找GetDispatcher:
@@ -142,7 +149,7 @@ public class DispatcherServlet extends HttpServlet {
             throw new ServletException();
         }
 
-        // 允许返回null:
+        // 允许返回null:表示内部已自行处理完毕；
         if (mv == null) {
             return;
         }
@@ -164,6 +171,9 @@ public class DispatcherServlet extends HttpServlet {
     /**
      * 7.
      * 当Servlet容器创建当前Servlet实例后，首先调用init()方法,此方法继承自 {@link GenericServlet} 类
+     *
+     * 第一次拦截某个请求的时候，会执行(在整个程序的生命周期内，仅仅执行这一次)
+     * 所以，最后创建的 viewEngine，也只有一个对象。
      */
     @Override
     public void init() throws ServletException {
@@ -243,11 +253,13 @@ public class DispatcherServlet extends HttpServlet {
             }
         }
 
-        // 创建ViewEngine:
-        this.viewEngine = new ViewEngine(getServletContext());
+        /**
+         * 创建ViewEngine:
+         * todo getServletContext(),可以参考：
+         * https://blog.csdn.net/qq_36371449/article/details/80314024
+         */
+        this.viewEngine = new ViewEngine(getServletContext());//
     }
-
-
 
 
 }

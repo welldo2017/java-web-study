@@ -67,6 +67,8 @@
 
     <build>
         <plugins>
+
+            <!--为了把方法参数的名称编译到class文件中，以便处理@GetMapping时使用，我们需要打开编译器的一个参数-->
             <plugin>
                 <groupId>org.apache.maven.plugins</groupId>
                 <artifactId>maven-compiler-plugin</artifactId>

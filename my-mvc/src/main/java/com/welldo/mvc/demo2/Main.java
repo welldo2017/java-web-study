@@ -22,31 +22,19 @@ import java.io.File;
  * └── src
  *     └── main
  *         ├── java
- *         │   └── com
- *         │       └── welldo
- *         │           └── mvc.demo2
+ *         │     └── com.welldo.mvc.demo2
  *         │               ├── Main.java
  *         │               ├── bean
- *         │               │   ├── SignInBean.java
  *         │               │   └── User.java
  *         │               ├── controller
- *         │               │   ├── IndexController.java
  *         │               │   └── UserController.java
  *         │               └── framework
  *         │                   ├── DispatcherServlet.java
- *         │                   ├── FileServlet.java
- *         │                   ├── GetMapping.java
- *         │                   ├── ModelAndView.java
- *         │                   ├── PostMapping.java
  *         │                   └── ViewEngine.java
  *         └── webapp
  *             ├── WEB-INF
  *             │   ├── templates
- *             │   │   ├── _base.html
  *             │   │   ├── hello.html
- *             │   │   ├── index.html
- *             │   │   ├── profile.html
- *             │   │   └── signin.html
  *             │   └── web.xml
  *             └── static
  *                 ├── css
@@ -58,6 +46,11 @@ import java.io.File;
  * 2.定义 modelAndView {@link ModelAndView}
  *
  * 3.定义 请求的分发者 dispatcherServlet {@link DispatcherServlet}
+ *
+ * 总结：
+ * 一个MVC框架，是基于Servlet基础，抽象出更高级的接口，使得上层基于MVC框架的开发可以不涉及Servlet相关的HttpServletRequest等接口，
+ * 处理多个请求更加灵活，并且可以使用任意模板引擎，不必使用JSP。
+ *
  */
 public class Main {
 

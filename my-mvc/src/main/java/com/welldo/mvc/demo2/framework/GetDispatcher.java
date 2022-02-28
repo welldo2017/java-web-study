@@ -9,10 +9,15 @@ import javax.servlet.http.HttpSession;
 import java.lang.reflect.InvocationTargetException;
 import java.lang.reflect.Method;
 
-//处理一个get 请求,是通过这个对象完成的
 
-//反射的相关知识,请参考:
-//https://github.com/welldo2017/java-base-study/blob/5b8c9e68b1df5e82faa1a4e1a1cd3da55ee3c939/src/main/java/com/welldo/zero/a7_reflection/What1.java
+/**
+ * 处理一个get 请求,是通过这个对象完成的
+ *
+ * 主要用到了反射，
+ * 反射的相关知识,请参考:
+ * https://github.com/welldo2017/java-base-study/blob/5b8c9e68b1df5e82faa1a4e1a1cd3da55ee3c939/src/main/java/com/welldo/zero/a7_reflection/What1.java
+ *
+ */
 public class GetDispatcher  extends AbstractDispatcher{
 
     final Object instance;              //controller的实例
@@ -33,8 +38,10 @@ public class GetDispatcher  extends AbstractDispatcher{
     }
 
 
-    //处理请求
-    //构造某个方法需要的所有参数列表，使用反射调用该方法后返回结果。
+    /**
+     * 处理请求
+     * 构造某个方法需要的所有参数列表，使用反射调用该方法后,返回结果。
+     */
     @Override
     public ModelAndView invoke(HttpServletRequest request, HttpServletResponse response)
             throws InvocationTargetException, IllegalAccessException {
@@ -43,8 +50,8 @@ public class GetDispatcher  extends AbstractDispatcher{
         Object[] arguments = new Object[parameterClasses.length];
 
         for (int i = 0; i < parameterClasses.length; i++) {
-            String parameterName = parameterNames[i];       //参数名
-            Class<?> parameterClass = parameterClasses[i];  //参数类型
+            String parameterName = parameterNames[i];       //方法定义的参数名
+            Class<?> parameterClass = parameterClasses[i];  //方法定义的参数类型
 
             //根据参数类型,给 arguments 数组 赋值;
             if (parameterClass == HttpServletRequest.class) {
@@ -79,13 +86,16 @@ public class GetDispatcher  extends AbstractDispatcher{
          * https://github.com/welldo2017/java-base-study/blob/5b8c9e68b1df5e82faa1a4e1a1cd3da55ee3c939/src/main/java/com/welldo/zero/a7_reflection/AccessMethod4.java
          * 或者 {@link Reference1}
          */
-        return (ModelAndView) this.method.invoke(this.instance, arguments);
+        Object invoke = this.method.invoke(this.instance, arguments);
+        return (ModelAndView) invoke;
     }
 
 
 
-    //get 请求,从请求路径上获取参数
-    //获取默认值
+    /**
+     * 针对get 请求,从请求路径上获取参数
+     * 如果没有传入 方法要求的参数，就返回默认值。
+     */
     private String getOrDefault(HttpServletRequest request, String name, String defaultValue) {
         String s = request.getParameter(name);
         return s == null ? defaultValue : s;

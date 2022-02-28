@@ -7,8 +7,8 @@ import java.util.Map;
 // 自定义的 Controller，不要求实现特定接口，只需返回ModelAndView对象
 public class ModelAndView {
 
-    public Map<String,Object> model;//string是model的名字, object是真正的model
-    public String view;//模板的路径
+    public Map<String,Object> model;    //string是请求参数的名字, object是请求参数的值。
+    public String view;                 //模板的路径
 
     //构造器
     public ModelAndView(String view) {

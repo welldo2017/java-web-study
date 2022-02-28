@@ -53,7 +53,7 @@ public class ViewEngine {
         Map<String, Object> model = mv.model;
 
         // 根据view找到模板文件:
-        PebbleTemplate template = this.engine.getTemplate(view);
+        PebbleTemplate template = this.engine.getTemplate(view);//从 /WEB-INF/templates 这个目录下，找到文件
         // 渲染并写入Writer:
         template.evaluate(writer, mv.model);
     }

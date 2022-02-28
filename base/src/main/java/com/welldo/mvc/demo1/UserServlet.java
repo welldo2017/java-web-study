@@ -51,8 +51,8 @@ import java.io.IOException;
  * JSP对页面开发不友好，更好的替代品是模板引擎；
  * 业务逻辑最好由纯粹的Java类实现，而不是强迫继承自Servlet。
  *
- * 我们来手写一个 mvc 框架 {@link }
- *
+ * 3. 我们来手写一个 mvc 框架
+ * 详见 my-mvc 工程
  *
  * author:welldo
  * date: 2021-09-14 18:15

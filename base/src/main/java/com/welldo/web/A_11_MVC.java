@@ -4,7 +4,7 @@ import com.welldo.mvc.demo1.UserServlet;
 
 /**
  * mvc开发
- * 请参考: {@link Main}
+ * 请参考: {@link UserServlet}
  *
  * author:welldo
  * date: 2022-01-04 16:33
