@@ -19,5 +19,9 @@ public class A_12_MyFilter implements Filter {
         //也就是说, 没有调用chain.doFilter(), 直接调用resp.sendRedirect()发送重定向，
         //那么,这个请求,后续的Filter和任何Servlet都没有机会处理该请求了。
 
+        //如果没有设置，默认就是200
+        HttpServletResponse resp = (HttpServletResponse) response;
+        resp.setStatus(202);
+
     }
 }

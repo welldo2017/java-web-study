@@ -15,7 +15,7 @@ import java.io.PrintWriter;
  * author:welldo
  * date: 2021-09-12 16:17
  */
-// @WebServlet(urlPatterns = "/")
+@WebServlet(urlPatterns = "/")
 public class A_6_Servlet_2 extends HttpServlet {
     @Override
     protected void doGet(HttpServletRequest req, HttpServletResponse resp) throws ServletException, IOException {

@@ -6,13 +6,8 @@ import javax.servlet.http.HttpServletRequest;
 import java.io.IOException;
 
 
-/**
- * 还可以继续添加其他Filter，例如LogFilter：
- * 多个Filter会组成一个链，每个请求都被链上的Filter依次处理：
- */
-
 // @WebFilter(urlPatterns = "/*")
-@WebFilter(filterName ="A_12_LogFilter")  //这是第二种写法,可以定义顺序,
+@WebFilter(filterName ="A_12_LogFilter")  //第二种写法,需要和 web.xml配合，可以定义顺序,
 public class A_12_LogFilter implements Filter {
     public void doFilter(ServletRequest request, ServletResponse response, FilterChain chain)
             throws IOException, ServletException {
