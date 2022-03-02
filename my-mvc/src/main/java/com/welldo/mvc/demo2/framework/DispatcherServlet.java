@@ -253,11 +253,7 @@ public class DispatcherServlet extends HttpServlet {
             }
         }
 
-        /**
-         * 创建ViewEngine:
-         * todo getServletContext(),可以参考：
-         * https://blog.csdn.net/qq_36371449/article/details/80314024
-         */
+
         this.viewEngine = new ViewEngine(getServletContext());//
     }
 
