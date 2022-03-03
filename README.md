@@ -12,5 +12,4 @@ mvc高级开发
 
 
 * spring开发  
->另开一个工程,请参考  
-https://github.com/welldo2017/java-web-study2-spring
+>https://github.com/welldo2017/java-web-study2-spring
